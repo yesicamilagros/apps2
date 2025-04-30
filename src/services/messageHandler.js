@@ -106,7 +106,7 @@ class MessageHandler {
        let response;
        switch (option){
           case "hablar con asesor":
-              this.appointmentState[to] = { step: 'name' };
+           //   this.appointmentState[to] = { step: 'name' };
                response = "Hola , como estas . cual es tu Nombre ?";
                
                break;
@@ -155,7 +155,7 @@ class MessageHandler {
 
   }
 
-
+/*
  completeApproiment(to){
      const appoinment=this.appointmentState[to];
      delete this.appointmentState[to];
@@ -164,19 +164,17 @@ class MessageHandler {
         to,
         appoinment.name,
         appoinment.petName,
-        /*
-        appoinment.petType, */
-        appoinment.reason,
-        new Date().toISOString()
+        appoinment.reason
+        
 
      ]
-     console.log(userData);
+    
 
      return `Gracias por elegirnos .`
 
 }
-
-
+*/
+/*
   async handleAppointmentFlow(to, message) {
     const state = this.appointmentState[to];
     let response;
@@ -185,13 +183,8 @@ class MessageHandler {
      case 'name':
         state.name = message;
         state.step = 'petName';
-       // response = "Gracias, Ahora, ¿Cuál es el nombre de tu Mascota?"
-        break;
-     /*  case 'petName':
-        state.petName = message;
-        state.step = 'petType';
-        response = '¿en que puedo ayudarte? (por ejemplo: perro, gato, huron, etc.)'
-        break;*/
+      break;
+     
       case 'petName':
         state.petName = message;
         state.step = 'reason';
@@ -199,11 +192,13 @@ class MessageHandler {
         break;
       case 'reason':
         state.reason = message;
-        response = this.completeApproiment(to);
+        response = 'esta bien , nos comunicaremos contigo'   //this.completeApproiment(to);
         break;
     }
     await whatsappService.sendMessage(to, response);
   }
+
+*/
 
 }
 

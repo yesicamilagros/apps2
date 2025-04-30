@@ -16,7 +16,7 @@ class WebhookController {
     const token = req.query['hub.verify_token'];
     const challenge = req.query['hub.challenge'];
 
-    if (mode === 'subscribe' && token === config.WEBHOOK_VERIFY_TOKEN) {
+    if (mode === 'subscribe' && token === config.WEEKHOOK_VERIFY_TOKEN) {
       res.status(200).send(challenge);
       console.log('Webhook verified successfully!');
     } else {
