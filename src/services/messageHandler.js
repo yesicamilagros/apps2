@@ -106,8 +106,8 @@ class MessageHandler {
        let response;
        switch (option){
           case "hablar con asesor":
-              this.appointmentState[to] = { step: 'name' };
-               response = "Hola , como estas ?";
+              this.appointmentState[to] = { step: 'petType' };
+               response = "Hola , como estas . cual es tu Nombre ?";
                
                break;
           case "visitar website":
@@ -190,7 +190,7 @@ class MessageHandler {
     let response;
 
     switch (state.step) {
-      case 'name':
+      /*case 'name':
         state.name = message;
         state.step = 'petName';
         response = "Gracias, Ahora, ¿Cuál es el nombre de tu Mascota?"
@@ -198,8 +198,8 @@ class MessageHandler {
       case 'petName':
         state.petName = message;
         state.step = 'petType';
-        response = '¿Qué tipo de mascota es? (por ejemplo: perro, gato, huron, etc.)'
-        break;
+        response = '¿en que puedo ayudarte? (por ejemplo: perro, gato, huron, etc.)'
+        break;*/
       case 'petType':
         state.petType = message;
         state.step = 'reason';
