@@ -106,7 +106,7 @@ class MessageHandler {
        let response;
        switch (option){
           case "hablar con asesor":
-              this.appointmentState[to] = { step: 'petType' };
+              this.appointmentState[to] = { step: 'name' };
                response = "Hola , como estas . cual es tu Nombre ?";
                
                break;
@@ -158,29 +158,21 @@ class MessageHandler {
 
  completeApproiment(to){
      const appoinment=this.appointmentState[to];
-     delete this.appointmentState[0];
+     delete this.appointmentState[to];
 
      const userData =[
         to,
         appoinment.name,
         appoinment.petName,
-        appoinment.petType,
+        /*
+        appoinment.petType, */
         appoinment.reason,
         new Date().toISOString()
 
      ]
      console.log(userData);
 
-     return `Gracias por agendar tu cita .
-           resumen de cita : 
-           Nombre : ${appoinment.name}
-           nombre de mascota : ${appoinment.petName}
-           tipo de mascota : ${appoinment.petType}
-           razon de consulta : ${appoinment.reason}
-
-           nos pondremos en contacto contigo
-     
-     `
+     return `Gracias por elegirnos .`
 
 }
 
@@ -190,18 +182,18 @@ class MessageHandler {
     let response;
 
     switch (state.step) {
-      /*case 'name':
+     case 'name':
         state.name = message;
         state.step = 'petName';
-        response = "Gracias, Ahora, ¿Cuál es el nombre de tu Mascota?"
+       // response = "Gracias, Ahora, ¿Cuál es el nombre de tu Mascota?"
         break;
-      case 'petName':
+     /*  case 'petName':
         state.petName = message;
         state.step = 'petType';
         response = '¿en que puedo ayudarte? (por ejemplo: perro, gato, huron, etc.)'
         break;*/
-      case 'petType':
-        state.petType = message;
+      case 'petName':
+        state.petName = message;
         state.step = 'reason';
         response = '¿Cuál es el motivo de la Consulta?';
         break;
