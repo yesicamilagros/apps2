@@ -6,7 +6,7 @@ class WebhookController {
     const message = req.body.entry?.[0]?.changes[0]?.value?.messages?.[0];
     const senderInfo = req.body.entry?.[0]?.changes[0]?.value?.contacts?.[0];
     if (message) {
-      await MessageHandler.handleIncomingMessage(message,senderInfo);
+      await MessageHandler.handleIncomingMessage(message);
     }
     res.sendStatus(200);
   }
