@@ -1,9 +1,9 @@
 import express from 'express';
-import webhookController from '../controllers/webhookController.js';
+import WebhookController from '../controllers/messageHandler.js';
 
 const router = express.Router();
 
-router.post('/webhook', webhookController.handleIncoming);
-router.get('/webhook', webhookController.verifyWebhook);
+router.post('/webhook', WebhookController.handleIncoming);
+router.get('/webhook', WebhookController.verifyWebhook);
 
 export default router;

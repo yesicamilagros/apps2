@@ -1,4 +1,4 @@
-import whatsappService from './whatsappService.js';
+import WhatsAppService from './whatsappService.js';
 
 class MessageHandler {
 
@@ -20,11 +20,11 @@ class MessageHandler {
       } else {
         await this.handleMenuOption(message.from, incomingMessage);
       }
-      await whatsappService.markAsRead(message.id);
+      await WhatsAppService.markAsRead(message.id);
     } else if (message?.type === 'interactive') {
       const option = message?.interactive?.button_reply?.title.toLowerCase().trim();
       await this.handleMenuOption(message.from, option);
-      await whatsappService.markAsRead(message.id);
+      await WhatsAppService.markAsRead(message.id);
     }
   }
 
@@ -40,7 +40,7 @@ class MessageHandler {
   async sendWelcomeMessage(to, messageId, senderInfo) {
     const name = this.getSenderName(senderInfo);
     const welcomeMessage = `Hola ${name}, Bienvenido a MEDPET, Tu tienda de mascotas en línea. ¿En qué puedo ayudarte hoy?`;
-    await whatsappService.sendMessage(to, welcomeMessage, messageId);
+    await WhatsAppService.sendMessage(to, welcomeMessage, messageId);
   }
 
   async sendWelcomeMenu(to) {
@@ -57,7 +57,7 @@ class MessageHandler {
       }
     ];
 
-    await whatsappService.sendInteractiveButtons(to, menuMessage, buttons);
+    await WhatsAppService.sendInteractiveButtons(to, menuMessage, buttons);
   }
 
   async handleMenuOption(to, option) {
@@ -76,7 +76,7 @@ class MessageHandler {
       default: 
        response = "Lo siento, no entendí tu selección, Por Favor, elige una de las opciones del menú."
     }
-    await whatsappService.sendMessage(to, response);
+    await WhatsAppService.sendMessage(to, response);
   }
 
   async sendMedia(to) {
@@ -96,7 +96,7 @@ class MessageHandler {
     const caption = '¡Esto es un PDF!';
     const type = 'document';
 
-    await whatsappService.sendMediaMessage(to, type, mediaUrl, caption);
+    await WhatsAppService.sendMediaMessage(to, type, mediaUrl, caption);
   }
 
   async handleAppointmentFlow(to, message) {
@@ -124,7 +124,7 @@ class MessageHandler {
         response = 'Gracias por agendar tu cita.';
         break;
     }
-    await whatsappService.sendMessage(to, response);
+    await WhatsAppService.sendMessage(to, response);
   }
 
 }
