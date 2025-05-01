@@ -5,10 +5,12 @@ class WhatsAppService {
   async sendMessage(to, body, messageId) {
     try {
       await axios({
+
         method: 'POST',
         url: `https://graph.facebook.com/${config.API_VERSION}/${config.BUSINESS_PHONE}/messages`,
         headers: {
-          Authorization: `Bearer ${config.API_TOKEN}`,
+        Authorization: `Bearer ${config.API_TOKEN}`,
+
         },
         data: {
           messaging_product: 'whatsapp',
@@ -27,15 +29,17 @@ class WhatsAppService {
   async markAsRead(messageId) {
     try {
       await axios({
+
         method: 'POST',
         url: `https://graph.facebook.com/${config.API_VERSION}/${config.BUSINESS_PHONE}/messages`,
         headers: {
           Authorization: `Bearer ${config.API_TOKEN}`,
+
         },
         data: {
-          messaging_product: 'whatsapp',
-          status: 'read',
-          message_id: messageId,
+          messaging_product: "whatsapp",
+          status: "read",
+          message_id: messageId
         },
       });
     } catch (error) {
