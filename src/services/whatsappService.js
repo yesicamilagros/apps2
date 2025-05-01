@@ -6,17 +6,17 @@ class WhatsAppService {
     try {
       await axios({
         method: 'POST',
-        url: `https://graph.facebook.com/${process.env.API_VERSION}/${process.env.BUSINESS_PHONE}/messages`,
+        url: `https://graph.facebook.com/${config.API_VERSION}/${config.BUSINESS_PHONE}/messages`,
         headers: {
-          Authorization: `Bearer ${process.env.API_TOKEN}`,
+          Authorization: `Bearer ${config.API_TOKEN}`,
         },
         data: {
           messaging_product: 'whatsapp',
           to,
-          text: { body } //,
-           //context: {
-           // message_id: messageId,
-           //},
+          text: { body },
+          // context: {
+          //   message_id: messageId,
+          // },
         },
       });
     } catch (error) {
@@ -28,9 +28,9 @@ class WhatsAppService {
     try {
       await axios({
         method: 'POST',
-        url: `https://graph.facebook.com/${process.env.API_VERSION}/${process.env.BUSINESS_PHONE}/messages`,
+        url: `https://graph.facebook.com/${config.API_VERSION}/${config.BUSINESS_PHONE}/messages`,
         headers: {
-          Authorization: `Bearer ${process.env.API_TOKEN}`,
+          Authorization: `Bearer ${config.API_TOKEN}`,
         },
         data: {
           messaging_product: 'whatsapp',
@@ -47,9 +47,9 @@ class WhatsAppService {
     try {
       await axios({
         method: 'POST',
-        url: `https://graph.facebook.com/${process.env.API_VERSION}/${process.env.BUSINESS_PHONE}/messages`,
+        url: `https://graph.facebook.com/${config.API_VERSION}/${config.BUSINESS_PHONE}/messages`,
         headers: {
-          Authorization: `Bearer ${process.env.API_TOKEN}`,
+          Authorization: `Bearer ${config.API_TOKEN}`,
         },
         data: {
           messaging_product: 'whatsapp',
@@ -92,9 +92,9 @@ class WhatsAppService {
 
       await axios({
         method: 'POST',
-        url: `https://graph.facebook.com/${process.env.API_VERSION}/${process.env.BUSINESS_PHONE}/messages`,
+        url: `https://graph.facebook.com/${config.API_VERSION}/${config.BUSINESS_PHONE}/messages`,
         headers: {
-          Authorization: `Bearer ${process.env.API_TOKEN}`,
+          Authorization: `Bearer ${config.API_TOKEN}`,
         },
         data: {
           messaging_product: 'whatsapp',
