@@ -1,11 +1,13 @@
 import whatsappService from './whatsappService.js';
 import WhatsAppService from './whatsappService.js';
 import axios from 'axios';
+import gpt from './gpt.js';
 
 class MessageHandler {
   // creando el cosntructor 
    constructor(){
     this.AppoinmentState ={};
+    this.AssistantState ={};
    }
 
 
@@ -28,11 +30,21 @@ class MessageHandler {
       else if(this.isGreeting(incomingMessage)){await this.sendWelcomeMessage(message.from, message.id,senderInfo);
                                                await this.sendMenuOption(message.from);} 
 
+      else if(this.AssistantState[message.from]){
+         await  this.handleAssitantFlow(message.from,incomingMessage);
+
+      }
+
       else if(contienePalabraClave){
         const aiResponse = await this.asistenteVentas(incomingMessage);
         await WhatsAppService.sendMessage(message.from,aiResponse);
 
       }
+
+    
+
+
+
       else {return ''}   
       await WhatsAppService.markAsRead(message.id);
     }
@@ -92,12 +104,16 @@ class MessageHandler {
   await WhatsAppService.sendInteractiveButton(to,messageOptions,buttons);
   }
 
+
+  waiting = (delay,callback)=>{setTimeout(callback,delay);};
+
   async handleMenuOption(to,option){
        let response ;
        switch (option){
           case "buton_1":
             
-            response = "nuestros tratanmientos" ;
+            response = "por favor podrias indicarnos que tipo de tratamientos deseas conocer?"; 
+            this.AssistantState[to] = { step: 'question' };
             break;
           case "buton_2":
               this.AppoinmentState[to]={step:'name'};
@@ -107,9 +123,16 @@ class MessageHandler {
           case "buton_3":
                 response = "hacer una cita";
                 break;
+          case "buton_5":
+                  response = "¿podrias indicarnos tus dudas, por favor?";
+                  break;
+          case "buton_6":
+                    response = "Lo siento, ¿podrías indicarnos qué información necesitas?";
+                    break;
 
           default :
-           response ="los siento no enntendi tu seleccion , por favor elige una de las opciones del Menu";
+           response ="";
+           break;
 
        };
 
@@ -182,7 +205,89 @@ async SendMedia(to){
 
   }
 
+  async handleAssitantFlow(to,message){
+    const state = this.AssistantState[to];
+    let response;
+    const menuMessage='¿la repsuesta fue de tu ayuda?';
+    const buttons = [
+      {
+          type: "reply",
+          reply: {
+              id: "buton_4",
+              title: "si, gracias"
+          }
+      },
+      {
+          type: "reply",
+          reply: {
+              id: "buton_5",
+              title: "Hacer otra pregunta"
+          }
+      },
+      {
+        type: "reply",
+        reply: {
+            id: "buton_6",
+            title: "No, no me ayudo"
+        }
+    }
+  ];
+     
+    if (state.step === 'question') {
+        
+        response = await gpt.llama4Groq(message);
+    }
 
+    delete this.AssistantState[to];
+    await whatsappService.sendMessage(to,response);
+    await WhatsAppService.sendInteractiveButton(to,menuMessage,buttons);
+    
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 /////////////////////////////////////////////////////////////////////////
 
 
@@ -338,7 +443,8 @@ async SendMedia(to){
               );}
 
 
-              else { return ' hola como estas ?. en que te puedo ayudar'}
+              else { return await this.llama4Groq(consultaUsuario ,context
+            )}
     
            
     
